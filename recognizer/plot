@@ -1,9 +1,0 @@
-#!/usr/bin/env python
-
-import matplotlib.pyplot as plt
-
-logprob = [-8.15734,-6.18607, -5.9302, -5.71734, -5.62462, -5.58357, -5.56002, -5.54589]
-plt.plot(logprob)
-plt.xlabel('Iteration')
-plt.ylabel('Log Probability')
-plt.show()

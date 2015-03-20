@@ -41,6 +41,7 @@ int main(int argc, char **argv) {
 	}
 	unsigned long start_s= clock();	
 	Fenonic feno = Fenonic(b_contrast);
+	Fenonic newFeno = Fenonic(!b_contrast);
 	std::cout << "Start training... " << std::endl;
 	//Normal mode
 	if (!b_contrast) {
@@ -69,7 +70,6 @@ int main(int argc, char **argv) {
 		std::cout << "N star is : " << nStar << std::endl;
 		start_s = clock();
 		//Optimal iteration counts
-		Fenonic newFeno = Fenonic(false);
 		for (int i = 0; i < nStar; i++) {
 			std::cout << "Iteration " << i+1 << std::endl;
 			newFeno.Train();
@@ -83,7 +83,12 @@ int main(int argc, char **argv) {
 	start_s= clock();
 	//Run on dev, and if not contrast setting
 	if (b_runDev) {
-		feno.Predict();
+		if (!b_contrast) {
+			feno.Predict();
+		}
+		else{
+			newFeno.Predict();
+		}
 		stop_s=clock();
 		std::cout << "Testing runtime : " << (stop_s-start_s)/double(CLOCKS_PER_SEC) <<"s." << std::endl;
 	}
