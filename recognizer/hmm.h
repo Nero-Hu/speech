@@ -17,9 +17,6 @@ static const int FENO_SIZE = 257;
 static const std::string SIL = "<sil>";
 static std::map<std::string, int> HIdxMap;
 
-//For impossible prob
-static const int NULL_PROB = -1;
-
 //Row float vector
 typedef std::vector<float> RowVec;
 //Row vector has better performance that can loop from bottom
