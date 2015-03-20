@@ -1,5 +1,9 @@
-##A reporsitory for speech recognition
+###A reporsitory for speech recognition
 
-###Simple HMM word recognizer
+The reporsitory contains following:
 
-###Fenonic Model
+- [Simple HMM word recognizer][1]
+- [Fenonic Model][2]
+
+[1]:https://github.com/Nero-Hu/speech/tree/master/HMM
+[2]:https://github.com/Nero-Hu/speech/tree/master/recognizer
