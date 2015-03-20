@@ -1,4 +1,4 @@
-###This reporsitory contains a fenonic model implementation.
+###This repository contains a fenonic model implementation.
 
 ###How to use
 - Simply type ``make`` to compile. A "fe" runnable will be generated.
@@ -6,6 +6,7 @@
   - -s  to run on test data (default true)
   - -i  iter to define iteration times (default 5 iter)
   - -c  use contrastive model to train (default false)
+  - -h  Show this help
 
 ###Data files
 

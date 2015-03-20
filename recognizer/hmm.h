@@ -48,6 +48,10 @@ public:
 			for (int i = 0; i<_numOfStates; i++) {
 				_pProb[i] = new float[_numOfStates];
 				_pCount[i] = new float[_numOfStates];
+				for (int j = 0; j < _numOfStates; j++) {
+					_pProb[i][j] = 0.0;
+					_pCount[i][j] = 0.0;
+				}
 			}
 			//Initialize null transition 2d array
 			_qProb = new float*[_numOfStates];
@@ -55,6 +59,10 @@ public:
 			for (int i = 0; i<_numOfStates; i++) {
 				_qProb[i] = new float[_numOfStates];
 				_qCount[i] = new float[_numOfStates];
+				for (int j = 0; j < _numOfStates; j++) {
+					_qProb[i][j] = 0.0;
+					_qCount[i][j] = 0.0;
+				}
 			}
 			
 			//Initialize emission 3d array
@@ -99,6 +107,10 @@ public:
 			for (int i = 0; i<_numOfStates; i++) {
 				_pProb[i] = new float[_numOfStates];
 				_pCount[i] = new float[_numOfStates];
+				for (int j = 0; j < _numOfStates; j++) {
+					_pProb[i][j] = 0.0;
+					_pCount[i][j] = 0.0;
+				}
 			}
 			
 			//Initialize null transition 2d array
@@ -107,6 +119,10 @@ public:
 			for (int i = 0; i<_numOfStates; i++) {
 				_qProb[i] = new float[_numOfStates];
 				_qCount[i] = new float[_numOfStates];
+				for (int j = 0; j < _numOfStates; j++) {
+					_qProb[i][j] = 0.0;
+					_qCount[i][j] = 0.0;
+				}
 			}
 			
 			//Initialize emission 3d array

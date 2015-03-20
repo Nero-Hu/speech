@@ -14,7 +14,7 @@ static const int DEFAULT_ITER = 5;
 
 int main(int argc, char **argv) {
 	//First get running options
-	bool b_runDev = true;
+	bool b_runDev = false;
 	bool b_contrast = false;
 	//default iteration times
 	int iter = DEFAULT_ITER;
@@ -57,10 +57,10 @@ int main(int argc, char **argv) {
 		float acc = 0.0;
 		float prevAcc = 1.0;
 		while (acc != prevAcc) {
+			nStar++;
 			prevAcc = acc;
 			feno.Train();
 			acc = feno.ComputeAcc();
-			nStar++;
 		}
 		std::cout << "Decide runtime : " <<
 		(clock()-dStart)/double(CLOCKS_PER_SEC) <<"s." << std::endl;
@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
 	std::cout << "=========================" << std::endl;
 	start_s= clock();
 	//Run on dev, and if not contrast setting
-	if (b_runDev && !b_contrast) {
+	if (b_runDev) {
 		feno.Predict();
 		stop_s=clock();
 		std::cout << "Testing runtime : " << (stop_s-start_s)/double(CLOCKS_PER_SEC) <<"s." << std::endl;

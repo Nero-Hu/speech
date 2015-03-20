@@ -62,6 +62,9 @@ class Fenonic {
 	float totalFrames;
 	
 	void ConstructData() {
+		trnPair.clear();
+		cstTrnPair.clear();
+		cstTstPair.clear();
 		std::string delimiter = " ";
 		
 		std::ifstream trnscr, trnwav, trnlbls, trnEndpt, devLbls, devWav;
@@ -133,26 +136,27 @@ class Fenonic {
 		}
 		std::cout << "Load " << i << " lines of training data, with total " << totalFrames <<
 		" frames. " << std::endl;
+		//Load dev data
+		while (std::getline(devLbls,strDevLbls) && devWav >> strDevWav) {
+			StringVec fenem;
+			
+			size_t pos = 0;
+			std::string token;
+			for (int j = 0; (pos = strDevLbls.find(delimiter)) != std::string::npos; j++) {
+				token = strDevLbls.substr(0, pos);
+				fenem.push_back(token);
+				strDevLbls.erase(0, pos + delimiter.length());
+			}
+			
+			devLabelVec.push_back(fenem);
+			devWavVec.push_back(strDevWav);
+		}
+		std::cout << "Load " << devLabelVec.size() << " lines of dev data" << std::endl;
+		
 		//Normal mode
 		if (!_isContrast) {
 			//Set train pair to be whole set
 			cstTrnPair = trnPair;
-			//Load dev data
-			while (std::getline(devLbls,strDevLbls) && devWav >> strDevWav) {
-				StringVec fenem;
-				
-				size_t pos = 0;
-				std::string token;
-				for (int j = 0; (pos = strDevLbls.find(delimiter)) != std::string::npos; j++) {
-					token = strDevLbls.substr(0, pos);
-					fenem.push_back(token);
-					strDevLbls.erase(0, pos + delimiter.length());
-				}
-				
-				devLabelVec.push_back(fenem);
-				devWavVec.push_back(strDevWav);
-			}
-			std::cout << "Load " << devLabelVec.size() << " lines of dev data" << std::endl;
 		}
 		//Contrast system
 		else{
@@ -204,6 +208,7 @@ public:
 	std::vector<float> _logProb;
 	
 	Fenonic(bool isContrast) {
+		HIdxMap.clear();
 		std::ifstream infile;
 		std::string data;
 		
@@ -297,7 +302,7 @@ public:
 				*a /= sum;
 			}
 			//Push to coefficient
-			logProb += log2f(sum);
+			logProb += logf(sum);
 			_coef.push_back(sum);
 			predAlpha = alphaVec;
 			_alpha.push_back(alphaVec);
