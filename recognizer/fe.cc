@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
 		std::cout << "N star is : " << nStar << std::endl;
 		start_s = clock();
 		//Optimal iteration counts
-		Fenonic newFeno = new Fenonic(false);
+		Fenonic newFeno = Fenonic(false);
 		for (int i = 0; i < nStar; i++) {
 			std::cout << "Iteration " << i+1 << std::endl;
 			newFeno.Train();
