@@ -1,0 +1,4 @@
+###HMM.py (numpy required)
+Implemented the Baum-Welch algorithm and Viterbi Decoding in python.
+
+See HMM.py , this file is well documented.
