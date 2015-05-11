@@ -16,8 +16,7 @@ public class Bigram {
 	}
 
 	public int hashCode() {
-		int hashFirst = cur != null ? cur.hashCode() : 0;
-		return cur * hashFirst;
+		return cur != null ? cur.hashCode() : 0;
 	}
 
 	public boolean equals(Object other) {
@@ -53,20 +52,5 @@ public class Bigram {
 			return counter.get(prev).getValue();
 		}
 		return 0;
-	}
-
-	/**
-	 * summing over all stats
-	 * 
-	 * @return
-	 */
-	public Integer sum() {
-		int sum = 0;
-
-		for (Map.Entry<Character, MutableInteger> entry : counter.entrySet()) {
-			sum += entry.getValue().getValue();
-		}
-		
-		return sum;
 	}
 }
