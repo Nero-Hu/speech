@@ -18,7 +18,7 @@ import sun.java2d.xr.MutableInteger;
 /**
  * Bit encoding tree
  * 
- * @author nerohu
+ * @author Haitang Hu
  *
  */
 public class BitEncodingTree {
@@ -451,8 +451,8 @@ public class BitEncodingTree {
 			// update non-terminal frontier list
 			nonTermFron = findNonTermFrontier(frontier);
 
-			System.out.printf("%s, %d, %f, %f\n", maxNode.path, askedBit,
-					maxReduce, heldEntropyReduce);
+//			System.out.printf("%s, %d, %f, %f\n", maxNode.path, askedBit,
+//					maxReduce, heldEntropyReduce);
 		}
 	}
 

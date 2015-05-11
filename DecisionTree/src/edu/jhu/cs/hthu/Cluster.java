@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Cluster class
  * 
- * @author nerohu
+ * @author Haitang Hu
  *
  */
 public class Cluster implements Comparable<Cluster> {

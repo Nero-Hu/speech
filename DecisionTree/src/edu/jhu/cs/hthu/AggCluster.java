@@ -141,7 +141,7 @@ public class AggCluster {
 			// remove old clusters
 			clusters.remove(clusters.indexOf(Ci));
 			clusters.remove(clusters.indexOf(Cj));
-//			System.out.printf("%s, %s \n", Ci.letters, Cj.letters);
+			// System.out.printf("%s, %s \n", Ci.letters, Cj.letters);
 			// Add new clusters
 			clusters.add(new Cluster(Ci, Cj, maxScore));
 		}
@@ -155,7 +155,7 @@ public class AggCluster {
 		if (numOfClusters < 2) {
 			return;
 		} else {
-			
+
 			// Add first two
 			clu.add(root.left);
 			clu.add(root.right);
@@ -169,7 +169,7 @@ public class AggCluster {
 				}
 			}
 		}
-		//Print clusters 
+		// Print clusters
 		Iterator<Cluster> it = clu.iterator();
 		while (it.hasNext()) {
 			System.out.println(it.next().letters);
@@ -248,12 +248,12 @@ public class AggCluster {
 		// return 0 if F union is 0
 		return num == 0 ? 0 : num * log2(num / denom);
 	}
-	
+
 	/**
 	 * Assigning bit-encoding for tree
 	 */
 	public void bitEncoding(Cluster c, int level) {
-		
+
 	}
 
 	/**
@@ -287,6 +287,12 @@ public class AggCluster {
 		BitEncodingTree bitTree = new BitEncodingTree(dTree.root);
 		bitTree.buildTree();
 		bitTree.perplex();
+		// Build Tree using chou's method and Gini-index
+		System.out.println("================================");
+		System.out.println("Building Tree with Chou's method");
+		ChouTree cTree = new ChouTree();
+		cTree.buildTree();
+		cTree.perplex();
 	}
 
 }
