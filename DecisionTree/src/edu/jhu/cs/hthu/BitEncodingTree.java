@@ -49,6 +49,8 @@ public class BitEncodingTree {
 		// next bit to it
 		public int[] allowedBits = new int[3];
 		public double entropy;
+		// question on this node
+		public int askedBit;
 
 		/**
 		 * Construct root and its prob, freq Map
@@ -384,7 +386,7 @@ public class BitEncodingTree {
 	}
 
 	/**
-	 * Build up a tree use chou method
+	 * Build up a tree use bit-encoding
 	 */
 	public void buildTree() {
 		double threshold = 0.005;
@@ -532,6 +534,9 @@ public class BitEncodingTree {
 			else
 				res = res.right;
 		}
+		// Set asked bit for the node
+		res.askedBit = askedBit;
+
 		List<Set<String>> sep = seperateSets(askedBit, res);
 		// Increase the allowed bits for asked bit
 		int[] newallowedBits = new int[3];
@@ -539,6 +544,7 @@ public class BitEncodingTree {
 			newallowedBits[i] = res.allowedBits[i];
 		}
 		newallowedBits[askedBit / this.depth]++;
+
 		TreeNode left = new TreeNode(sep.get(0), res, newallowedBits, dev4gram,
 				dev.size());
 		TreeNode right = new TreeNode(sep.get(1), res, newallowedBits,
@@ -606,5 +612,42 @@ public class BitEncodingTree {
 			Character val = it.next();
 			System.out.printf("%s : %s\n", val, coding.get(val));
 		}
+	}
+
+	// Compute perplexity on test data
+	public void perplex() {
+		double perplex = 0.0;
+		for (int i = 3; i < test.size(); i++) {
+			String cur = coding.get(test.get(i));
+			// concat bit vector for history
+			String history = concatBitVector(
+					coding.get(test.get(i - 3)),
+					concatBitVector(coding.get(test.get(i - 1)),
+							coding.get(test.get(i - 2))));
+			TreeNode leaf = getEquivLeaf(history);
+			double prob = leaf.probMap.get(cur);
+			perplex += AggCluster.log2(prob);
+		}
+		perplex = Math.pow(2, - perplex / (test.size() - 3.));
+		System.out.printf("Perplexity on test data is %f .\n", perplex);
+	}
+	
+	/**
+	 * Get Equivalence class leaf for any history
+	 * @param history
+	 * @return
+	 */
+	private TreeNode getEquivLeaf(String history) {
+		TreeNode res = this.devRoot;
+		// Only ends when is leaf
+		while(res.left != null || res.right != null) {
+			int askedBit = res.askedBit;
+			int answer = Character.digit(history.charAt(askedBit), 10);
+			if (answer == 1)
+				res = res.left;
+			else
+				res = res.right;
+		}
+		return res;
 	}
 }

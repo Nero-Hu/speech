@@ -282,8 +282,11 @@ public class AggCluster {
 		System.out.println("Best 4 way");
 		dTree.findBest(4);
 		// Build coding-scheme Tree with cluster
+		System.out.println("================================");
+		System.out.println("Building Bit-Encoding Tree");
 		BitEncodingTree bitTree = new BitEncodingTree(dTree.root);
 		bitTree.buildTree();
+		bitTree.perplex();
 	}
 
 }
