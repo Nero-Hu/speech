@@ -250,13 +250,6 @@ public class AggCluster {
 	}
 
 	/**
-	 * Assigning bit-encoding for tree
-	 */
-	public void bitEncoding(Cluster c, int level) {
-
-	}
-
-	/**
 	 * base 2 log utility function
 	 * 
 	 * @param in
@@ -272,6 +265,26 @@ public class AggCluster {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		double bitThre = 0.001;
+		double chouThre = 0.0001;
+		// Read args to see if have any specified threshold
+		for (int i = 0; i < args.length; i++) {
+			try {
+		        double thre = Double.parseDouble(args[0]);
+		        if(i == 0){
+		        	System.out.printf("Setting threshold of Bit-Endocing Tree to be %f \n", thre);
+		        	bitThre = thre;
+		        }
+		        else{
+		        	System.out.printf("Setting threshold of Chou Tree to be %f \n", thre);
+		        	chouThre = thre;
+		        }
+		    } catch (NumberFormatException e) {
+		        System.err.println("Argument" + args[0] + " must be an double number.");
+		        System.exit(1);
+		    }
+		}
+
 		AggCluster dTree = new AggCluster();
 		// Basic clustering
 		dTree.clusteringTree();
@@ -283,14 +296,16 @@ public class AggCluster {
 		dTree.findBest(4);
 		// Build coding-scheme Tree with cluster
 		System.out.println("================================");
-		System.out.println("Building Bit-Encoding Tree");
-		BitEncodingTree bitTree = new BitEncodingTree(dTree.root);
+		System.out.println("Building Bit-Encoding Tree, with threshold : "
+				+ bitThre);
+		BitEncodingTree bitTree = new BitEncodingTree(dTree.root, bitThre);
 		bitTree.buildTree();
 		bitTree.perplex();
 		// Build Tree using chou's method and Gini-index
 		System.out.println("================================");
-		System.out.println("Building Tree with Chou's method");
-		ChouTree cTree = new ChouTree();
+		System.out.println("Building Tree with Chou's method, with threshod : "
+				+ chouThre);
+		ChouTree cTree = new ChouTree(chouThre);
 		cTree.buildTree();
 		cTree.perplex();
 	}

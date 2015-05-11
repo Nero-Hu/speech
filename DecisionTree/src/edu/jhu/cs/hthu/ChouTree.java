@@ -181,8 +181,10 @@ public class ChouTree {
 
 	private TreeNode devRoot;
 	private TreeNode held_outRoot;
+	
+	double threshold;
 
-	public ChouTree() {
+	public ChouTree(double threshold) {
 		train = new ArrayList<Character>();
 		test = new ArrayList<Character>();
 
@@ -193,6 +195,8 @@ public class ChouTree {
 		heldout_4gram = new HashMap<String, Map<String, MutableInteger>>();
 
 		collectStats();
+		
+		this.threshold = threshold;
 	}
 
 	/**
@@ -490,7 +494,6 @@ public class ChouTree {
 	}
 
 	public void buildTree() {
-		double threshold = 0.00008;
 		// Record all the frontiers
 		List<TreeNode> frontier = new ArrayList<TreeNode>();
 		this.devRoot = new TreeNode(dev4gram, dev.size());

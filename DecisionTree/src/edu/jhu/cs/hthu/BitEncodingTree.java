@@ -171,8 +171,10 @@ public class BitEncodingTree {
 
 	private TreeNode devRoot;
 	private TreeNode heldoutRoot;
+	
+	double threshold;
 
-	public BitEncodingTree(Cluster root) {
+	public BitEncodingTree(Cluster root, double threshold) {
 		depth = 0;
 		coding = new HashMap<Character, String>();
 
@@ -192,7 +194,8 @@ public class BitEncodingTree {
 
 		// Read data, 80% dev, 20% held-out
 		collectStats();
-
+		
+		this.threshold = threshold;
 		// printEncoding();
 	}
 
@@ -389,7 +392,6 @@ public class BitEncodingTree {
 	 * Build up a tree use bit-encoding
 	 */
 	public void buildTree() {
-		double threshold = 0.005;
 		// Record all the frontiers
 		List<TreeNode> frontier = new ArrayList<TreeNode>();
 		// First place all set into root
