@@ -13,7 +13,7 @@ import java.util.PriorityQueue;
 
 import sun.java2d.xr.MutableInteger;
 
-public class DecisionTree {
+public class AggCluster {
 
 	public static char[] LETTERS = "abcdefghijklmnopqrstuvwxyz ".toCharArray();
 
@@ -30,7 +30,7 @@ public class DecisionTree {
 
 	private Cluster root;
 
-	public DecisionTree() {
+	public AggCluster() {
 		// Initialize variables
 		train = new ArrayList<Character>();
 		test = new ArrayList<Character>();
@@ -141,6 +141,7 @@ public class DecisionTree {
 			// remove old clusters
 			clusters.remove(clusters.indexOf(Ci));
 			clusters.remove(clusters.indexOf(Cj));
+//			System.out.printf("%s, %s \n", Ci.letters, Cj.letters);
 			// Add new clusters
 			clusters.add(new Cluster(Ci, Cj, maxScore));
 		}
@@ -148,28 +149,31 @@ public class DecisionTree {
 		root = clusters.get(0);
 	}
 
-	public List<Cluster> findBest(int numOfClusters) {
-		List<Cluster> res = new ArrayList<Cluster>();
+	public void findBest(int numOfClusters) {
+		// Traverse tree using minimum score
+		PriorityQueue<Cluster> clu = new PriorityQueue<Cluster>();
 		if (numOfClusters < 2) {
-			res.add(root);
+			return;
 		} else {
-			// Traverse tree using minimum score
-			PriorityQueue<Cluster> clu = new PriorityQueue<Cluster>();
-			//Add first two
+			
+			// Add first two
 			clu.add(root.left);
 			clu.add(root.right);
 			while (clu.size() < numOfClusters) {
 				Cluster c = clu.poll();
-				if (c == null) return res;
-				else{
+				if (c == null)
+					break;
+				else {
 					clu.add(c.left);
 					clu.add(c.right);
 				}
 			}
-			res.addAll(clu);
 		}
-
-		return res;
+		//Print clusters 
+		Iterator<Cluster> it = clu.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next().letters);
+		}
 	}
 
 	// Compute f score given i, j
@@ -241,33 +245,45 @@ public class DecisionTree {
 		double num = F(i, j);
 		double denom = F(i) * F(j);
 
-		// return negative penalty for 0
-		return num == 0 ? -100 : num * log2(num / denom);
+		// return 0 if F union is 0
+		return num == 0 ? 0 : num * log2(num / denom);
 	}
 	
 	/**
+	 * Assigning bit-encoding for tree
+	 */
+	public void bitEncoding(Cluster c, int level) {
+		
+	}
+
+	/**
 	 * base 2 log utility function
+	 * 
 	 * @param in
 	 * @return
 	 */
-	public static double log2(double in)
-	{
+	public static double log2(double in) {
 		return Math.log(in) / Math.log(2);
 	}
-	
+
 	/**
 	 * Main function
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		DecisionTree dTree = new DecisionTree();
+		AggCluster dTree = new AggCluster();
 		// Basic clustering
 		dTree.clusteringTree();
-		Iterator<Cluster> it = dTree.findBest(4).iterator();
-		while(it.hasNext()) {
-			System.out.println(it.next().letters);
-		}
-		
+		System.out.println("================================");
+		System.out.println("Best 2 way");
+		dTree.findBest(2);
+		System.out.println("================================");
+		System.out.println("Best 4 way");
+		dTree.findBest(4);
+		// Build coding-scheme Tree with cluster
+		BitEncodingTree bitTree = new BitEncodingTree(dTree.root);
+		bitTree.buildTree();
 	}
 
 }
