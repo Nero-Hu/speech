@@ -265,8 +265,8 @@ public class AggCluster {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		double bitThre = 0.001;
-		double chouThre = 0.0001;
+		double bitThre = 0.005;
+		double chouThre = 0.005;
 		// Read args to see if have any specified threshold
 		for (int i = 0; i < args.length; i++) {
 			try {
@@ -309,5 +309,4 @@ public class AggCluster {
 		cTree.buildTree();
 		cTree.perplex();
 	}
-
 }

@@ -161,12 +161,21 @@ public class ChouTree {
 		}
 
 		private double giniIndex(TreeNode node) {
+			//Entropy method
+//			double score = 0.0;
+//			for (Entry<String, Double> entry : node.probMap.entrySet()) {
+//				double prob = entry.getValue();
+//				score += -prob * AggCluster.log2(prob);
+//			}
+//			return score;
+			//GiniIndex
 			double score = 0.0;
 			for (Entry<String, Double> entry : node.probMap.entrySet()) {
 				double prob = entry.getValue();
 				score += prob * prob;
 			}
 			return 1.0 - score;
+			
 		}
 	}
 
